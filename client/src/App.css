@@ -1,15 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+html, body, header, h1 {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: seagreen;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #222;
-  height: 150px;
+  
   padding: 20px;
   color: white;
 }
@@ -22,7 +28,46 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.hidden {
+  display: none;
+}
+
+.avatar {
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+}
+#myavatar {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+main {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.share {
+  width: 500px;
+  height: 120px;
+  margin: 10px auto;
+  padding: 10px;
+  background: white;
+  border-radius: 30px;
+}
+.share h2 {
+  display: inline-block;
+  line-height: 100px;
+  vertical-align: top;
+  height: 100px;
+  width: 200px;
+  margin: 0;
+}
+.share .avatar {
+  margin-right: 20px;
+}
+.player {
+  display: inline-block;
+  margin-top: 10px;
 }

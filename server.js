@@ -18,27 +18,33 @@ const connection = {
 
 const db = pgp(connection);
 
-
-
 // Spotify credentials
 const stateKey = 'spotify_auth_state';
 const client = {
   clientId: '068c62453a994ed3831a45fab8bd2b87',
   secretId: '1191604707c749d9bcdb1e45304cfb41',
   scope: 'user-read-currently-playing',
-  redirect: 'http://localhost:8888/callback'
+  redirect: 'http://localhost:3001/callback'
 }
 
 // Middleware starts here
-app.set('views', './views');
-app.set('view engine', 'ejs');
+// app.set('views', './views');
+// app.set('view engine', 'ejs');
 
-app.use(express.static('client/build'));
 app.use(cookieParser());
 
+
 // Routes
+
+// app.get('/index.html', function(request, response){
+//   response.send('hey')
+//   // response.sendFile('client/build/index.html');
+// })
+app.use(express.static('client/build/'));
+
 // Spotify authorization
 app.get('/login', function(request, response){
+  console.log('login')
   var state = chance.string({ length: 16 })
   response.cookie(stateKey, state);
   response.redirect('https://accounts.spotify.com/authorize?' +
@@ -48,8 +54,10 @@ app.get('/login', function(request, response){
       scope: client.scope,
       redirect_uri: client.redirect,
       state: state
-    }));
+    })
+  );
 })
+
 
 app.get('/callback', function(req, res) {
   // your application requests refresh and access tokens
@@ -173,7 +181,7 @@ app.get('/api/comment', function(req, res){
 })
 
 app.get('/api/posts', function(req, res){
-  db.any('SELECT users.name AS name, tracks.spotify_id AS track, shares.id AS share_id, shares.created_at FROM shares, tracks, users, comments WHERE shares.track_id = tracks.id AND shares.user_id = users.id')
+  db.any('SELECT users.name AS name, tracks.spotify_id AS track, shares.id AS share_id, shares.created_at AS timestamp FROM shares, tracks, users, comments WHERE shares.track_id = tracks.id AND shares.user_id = users.id ORDER BY timestamp DESC')
     .then(function(data) {
 
       // data.forEach(function(row){
