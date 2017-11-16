@@ -22,14 +22,14 @@
     createShare: function(req, res){
       let name = req.query.name || null
       let track = req.query.track || null
-      
+
       database.getInsertUserId(name)
         .then(userId => {
           console.log(name + " has id of " + userId)
           database.getInsertTrackId(track)
             .then(trackId => {
               console.log(track + " has id of " + trackId)
-              database.createShare()
+              database.createShare(userId, trackId)
                 .then(() => {
                     console.log('successfully added new share! :tada:')
                     res.json({success: true})
