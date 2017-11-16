@@ -22,7 +22,7 @@
     createShare: function(req, res){
       let name = req.query.name || null
       let track = req.query.track || null
-
+      
       database.getInsertUserId(name)
         .then(userId => {
           console.log(name + " has id of " + userId)
