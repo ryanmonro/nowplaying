@@ -4,12 +4,7 @@
 (http://nowplaying13.herokuapp.com)
 
 ## The Pitch
-Myself and a few of my friends use WhatsApp almost exclusively for sharing Spotify links. I decided a replacement for that would be fun to build: a messaging site where all you can do is share the song you're listening to, and comment on other people's shared songs. Surprisingly, Spotify's own app doesn't have that capability.
-
-## Planning 
-Trello board (https://github.com/ryanmonro/nowplaying/blob/master/docs/trello.jpeg) 
-Wireframes (https://github.com/ryanmonro/nowplaying/blob/master/docs/wireframes.JPG) 
-ER Diagram (https://github.com/ryanmonro/nowplaying/blob/master/docs/er.JPG)
+Me and a few of my friends use WhatsApp almost exclusively for sharing Spotify links. I decided a replacement for that would be fun to build: a messaging site where all you can do is share the song you're listening to, and comment on other people's shared songs. Surprisingly, Spotify's own app doesn't have that capability.
 
 ## User Stories
 - "As a user I need to be able to log in with my Spotify account."
@@ -17,13 +12,19 @@ ER Diagram (https://github.com/ryanmonro/nowplaying/blob/master/docs/er.JPG)
 - "As a user I want to be able to always see the song I'm currently listening to on Spotify."
 - "As a user I want a simple Share button to post my current song for other users to see."
 
+## Planning 
+- Trello board (https://github.com/ryanmonro/nowplaying/blob/master/docs/trello.jpeg) 
+- Wireframes (https://github.com/ryanmonro/nowplaying/blob/master/docs/wireframes.JPG) 
+- ER Diagram (https://github.com/ryanmonro/nowplaying/blob/master/docs/er.JPG)
+
 ## Approach
 In a way, I started building this app four times. After deciding it was what I wanted to build, I first began building a Rails app with a React front-end via react-rails front-end. After realising react-rails's implementation of React was not what I'd hoped for, I reverted to just building a Rails app. After getting to the working-database-and-routes stage I decided "I made a full stack JS app" was something I really wanted to achieve by the end of the week, and built the backend in Express with a rudimentary front end that accessed the API via AJAX. Then I threw that front end out the window and built a React front-end. The React development happened inside the `client` folder, and Express served the routes in the following manner:
 ```
 /      (statically serving /client/build)
 /api/* (handled by express)
-/login (handled by express```
-This allowed me to use the React development server in development, and then build it to the build folder so it could be served by my backend server.
+/login (handled by express
+```
+This allowed me to use the React development server in development, and then build it to the build folder so it could be served by my Express server.
 
 ## Cool Tech
 ### React
