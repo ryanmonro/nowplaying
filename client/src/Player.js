@@ -8,10 +8,14 @@ export default class Player extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({track: nextProps.track});
+  }
+
   render(){
     return (
       <div className="player">
-        <iframe height="80" width="300" src={"https://open.spotify.com/embed?uri=spotify:track:" + this.state.track + "&view=coverart"} frameBorder="0" allowtransparency="true"></iframe>
+        <iframe title='myPlayer' height="80" width="300" src={"https://open.spotify.com/embed?uri=spotify:track:" + this.state.track + "&view=coverart"} frameBorder="0" allowtransparency="true"></iframe>
       </div>
     )
   }

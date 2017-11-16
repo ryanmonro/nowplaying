@@ -102,7 +102,7 @@ class App extends Component {
   }
 
   render() {
-    let {loggedin, playing, userId, avatarUrl, access_token, posts, currentTrack} = this.state
+    let {loggedin, playing, userId, access_token, posts, currentTrack} = this.state
     return (
       <div className="App">
         <header className="App-header">
@@ -123,7 +123,7 @@ class App extends Component {
         </header>
         <main>
         <div id="feed">
-          {posts.map((post, key) => <Share post={post} key={key}access_token={access_token} />)}
+          {posts.map((post, key) => <Share post={post} key={key} theKey={key} access_token={access_token} />)}
         </div>
         </main>
       </div>

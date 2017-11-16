@@ -9,6 +9,12 @@ export default class Avatar extends React.Component {
       access_token: props.access_token,
       url: null
     }
+    
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('receiving props')
+    this.setState({userId: nextProps.userId});
     this.getUrl()
   }
 
@@ -22,7 +28,6 @@ export default class Avatar extends React.Component {
     })
     .then(res=>res.json())
     .then(res=> {
-      console.log(res)
       const images = res.images || []
       if(images.length){
         let imgUrl = res.images[0].url
@@ -32,6 +37,6 @@ export default class Avatar extends React.Component {
   }
 
   render() {
-    return <img src={this.state.url} className='avatar' />
+    return <img src={this.state.url} key={this.state.url} className='avatar' alt={this.state.userId}/>
   }
 }
