@@ -3,6 +3,7 @@
   var chance = new Chance();
   var request = require('request');
   var querystring = require('querystring');
+  
   // Spotify credentials
   const stateKey = 'spotify_auth_state';
   const client = {

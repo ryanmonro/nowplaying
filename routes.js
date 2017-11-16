@@ -1,9 +1,7 @@
 
 (()=>{
-  var Chance = require('chance');
-  var chance = new Chance();
   var database = require('./database')
-  var spotify = require('./spotify')
+  var spotifyLib = require('./spotify')
 
   var api = {
     getPosts: function(req, res){
@@ -49,25 +47,22 @@
       });
     }
   }
-  function login(request, response){
-    spotify.login(request, response)
+
+  var spotify = {
+    login: function(request, response){
+      spotifyLib.login(request, response)
+    },
+    callback: function(req, res) {
+      spotifyLib.callback(req, res)
+    },
+    refresh_token: function(req, res){
+      spotifyLib.refresh_token(req, res)
+    }
   }
 
-  function callback(req, res) {
-    spotify.callback(req, res)
-  }
-
-  function refresh_token(req, res){
-    spotify.refresh_token(req, res)
-  }
   
-
-
-
   module.exports = {
     api: api,
-    login: login,
-    callback: callback,
-    refresh_token: refresh_token
+    spotify: spotify
   }
 })()

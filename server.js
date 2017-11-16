@@ -11,11 +11,11 @@ app.use(cookieParser());
 app.use(express.static('client/build/'));
 
 // Spotify authorization
-app.get('/login', routes.login)
+app.get('/login', routes.spotify.login)
 
-app.get('/callback', routes.callback);
+app.get('/callback', routes.spotify.callback);
 
-app.get('/refresh_token', routes.refresh_token);
+app.get('/refresh_token', routes.spotify.refresh_token);
 
 // API Routes
 app.get('/api/share', routes.api.createShare)
