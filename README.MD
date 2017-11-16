@@ -7,9 +7,9 @@
 Myself and a few of my friends use WhatsApp almost exclusively for sharing Spotify links. I decided a replacement for that would be fun to build: a messaging site where all you can do is share the song you're listening to, and comment on other people's shared songs. Surprisingly, Spotify's own app doesn't have that capability.
 
 ## Planning 
-Trello board (https://github.com/ryanmonro/nowplaying/blob/master/docs/trello.jpeg)
-Wireframes (https://github.com/ryanmonro/nowplaying/blob/master/docs/wireframes.jpeg)
-ER Diagram (https://github.com/ryanmonro/nowplaying/blob/master/docs/er.jpeg)
+Trello board (https://github.com/ryanmonro/nowplaying/blob/master/docs/trello.jpeg) 
+Wireframes (https://github.com/ryanmonro/nowplaying/blob/master/docs/wireframes.JPG) 
+ER Diagram (https://github.com/ryanmonro/nowplaying/blob/master/docs/er.JPG)
 
 ## User Stories
 - "As a user I need to be able to log in with my Spotify account."
