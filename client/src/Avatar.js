@@ -7,9 +7,9 @@ export default class Avatar extends React.Component {
     this.state = {
       userId: props.userId,
       access_token: props.access_token,
-      url: null
-    }
-    
+      url: null,
+      key: props.key || ''
+    }    
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,6 +37,6 @@ export default class Avatar extends React.Component {
   }
 
   render() {
-    return <img src={this.state.url} key={this.state.url} className='avatar' alt={this.state.userId}/>
+    return <img src={this.state.url} key={this.state.key} className='avatar' alt={this.state.userId}/>
   }
 }

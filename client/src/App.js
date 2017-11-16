@@ -10,7 +10,7 @@ class App extends Component {
     super(props)
 
     this.share = this.share.bind(this)
-    this.updateNowPlaying = this.updateNowPlaying.bind(this)
+    this.getNowPlaying = this.getNowPlaying.bind(this)
     const hashParams = this.getHashParams()
     this.state = {
       loggedin: hashParams.id && hashParams.access_token,
@@ -25,7 +25,7 @@ class App extends Component {
     if (this.state.loggedin){
       
       this.getNowPlaying()
-      setInterval(this.updateNowPlaying, 10000)
+      setInterval(this.getNowPlaying, 10000)
     }
   }
 
@@ -61,27 +61,15 @@ class App extends Component {
         }
       }
     )
-    .then(res=>res.json())
-    .then(res=> { 
-      let currentTrack = res.item.id
-      this.setState({playing: true, currentTrack: currentTrack})
-    })
-  }
-
-  updateNowPlaying(){
-    fetch('https://api.spotify.com/v1/me/player/currently-playing',
-      {
-        headers: {
-          'Authorization': 'Bearer ' + this.state.access_token
-        }
-      }
-    )
-    .then(res=>res.json())
-    .then(res=> { 
-      let oldTrack = this.state.currentTrack
-      let currentTrack = res.item.id
-      if (oldTrack !== currentTrack) {
-        this.setState({playing: true, currentTrack: currentTrack})
+    .then(res=>{ if (res.status === 200) {
+        res.json().then(json=>{
+          console.log(json)
+          let currentTrack = json.item.id
+          this.setState({playing: true, currentTrack: currentTrack})
+        } 
+      )
+      } else {
+        this.setState({playing: false, currentTrack: null})
       }
     })
   }
@@ -123,7 +111,7 @@ class App extends Component {
         </header>
         <main>
         <div id="feed">
-          {posts.map((post, key) => <Share post={post} key={key} theKey={key} access_token={access_token} />)}
+          {posts.map((post, key) => <Share post={post} key={post.share_id} theKey={post.share_id} access_token={access_token} />)}
         </div>
         </main>
       </div>
