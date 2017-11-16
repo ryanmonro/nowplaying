@@ -1,5 +1,5 @@
-var database = require('../database')
-var routes = require('../routes')
+var database = require('../modules/database')
+var routes = require('../modules/routes')
 var assert = require('assert')
 
 describe('api', function() {
