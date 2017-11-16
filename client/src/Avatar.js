@@ -1,4 +1,6 @@
 import React from 'react'
+import Api from './Api.js'
+const api = new Api()
 
 export default class Avatar extends React.Component {
   constructor(props){
@@ -8,24 +10,18 @@ export default class Avatar extends React.Component {
       userId: props.userId,
       access_token: props.access_token,
       url: null,
-      key: props.key || ''
+      theKey: props.theKey || ''
     }    
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('receiving props')
     this.setState({userId: nextProps.userId});
     this.getUrl()
   }
 
   getUrl(){
     const {userId, access_token} = this.state
-    const url = 'https://api.spotify.com/v1/users/' + userId
-    fetch(url, {
-      headers: {
-          'Authorization': 'Bearer ' + access_token
-        }
-    })
+    api.getAvatarUrl(userId, access_token)
     .then(res=>res.json())
     .then(res=> {
       const images = res.images || []
@@ -37,6 +33,6 @@ export default class Avatar extends React.Component {
   }
 
   render() {
-    return <img src={this.state.url} key={this.state.key} className='avatar' alt={this.state.userId}/>
+    return <img src={this.state.url} key={this.state.theKey} className='avatar' alt={this.state.userId}/>
   }
 }

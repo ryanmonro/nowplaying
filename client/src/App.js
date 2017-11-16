@@ -4,11 +4,12 @@ import './backend.js'
 import Avatar from './Avatar'
 import Player from './Player'
 import Share from './Share'
+import Api from './Api.js'
+const api = new Api()
 
 class App extends Component {
   constructor(props){
     super(props)
-
     this.share = this.share.bind(this)
     this.getNowPlaying = this.getNowPlaying.bind(this)
     const hashParams = this.getHashParams()
@@ -21,7 +22,11 @@ class App extends Component {
       access_token: hashParams.access_token,
       refresh_token: hashParams.refresh_token
     }
-    this.getPosts()
+
+    api.getPosts()
+    .then(res=>res.json())
+    .then(res=>this.setState({posts: res}))
+
     if (this.state.loggedin){
       
       this.getNowPlaying()
@@ -39,31 +44,17 @@ class App extends Component {
     return output
   }
 
-  callSpotify() {
+  updateToken() {
     // requesting access token from refresh token
-    const url = `/refresh_token?refresh_token=${this.state.refresh_token}`
-    fetch(url)
+    api.updateToken(this.state.refresh_token)
     .then(res => res.json())
     .then(res => this.setState({access_token: res.access_token}))
   }
 
-  getPosts(){
-    fetch('/api/posts')
-    .then(res=>res.json())
-    .then(res=>this.setState({posts: res}))
-  }
-
   getNowPlaying(){
-    fetch('https://api.spotify.com/v1/me/player/currently-playing',
-      {
-        headers: {
-          'Authorization': 'Bearer ' + this.state.access_token
-        }
-      }
-    )
+    api.getNowPlaying(this.state.access_token)  
     .then(res=>{ if (res.status === 200) {
         res.json().then(json=>{
-          console.log(json)
           let currentTrack = json.item.id
           this.setState({playing: true, currentTrack: currentTrack})
         } 
@@ -76,12 +67,12 @@ class App extends Component {
 
   share(e){
     let {currentTrack, userId, posts} = this.state 
-    fetch('/api/share?track=' + currentTrack + '&name=' + userId)
+    api.shareTrack(currentTrack, userId)
     .then(res=>res.json())
-    .then(res=> { console.log(res)
-      let newShare = {
+    .then(res=> { let newShare = {
         name: userId,
         track: currentTrack,
+        share_id: Math.floor(Math.random() * 10000),
         comments: []
       }
       posts.unshift(newShare)
