@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 import './backend.js'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+// import AppBar from 'material-ui/AppBar';
 import Avatar from './Avatar'
 import Player from './Player'
 import Share from './Share'
 import Api from './Api.js'
+
 const api = new Api()
 
 class App extends Component {
@@ -83,17 +88,19 @@ class App extends Component {
   render() {
     let {loggedin, playing, userId, access_token, posts, currentTrack} = this.state
     return (
+      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">NowPlaying</h1>
           <div id="login" className={loggedin ? 'hidden' : ''}>
             <p><a href='/login' target="_self">Log In with Spotify</a></p>
           </div>
-          <div id="loggedin" className={loggedin ? '' : 'hidden'}>
-            logged in as <span className="username">{userId}</span>
-            <div id="myavatar">
+          <div id="logout" className={!loggedin ? 'hidden' : ''}>
+            <p><a href='/' target="_self">Log Out</a></p>
+          </div>
+          <div id="myavatar">
               {loggedin ? <Avatar userId={userId} access_token={access_token}/> : ''}
-            </div>
           </div>
           <div id="nowplaying" className={playing ? '' : 'hidden'}>
             {playing ? <Player track={currentTrack} /> : ''}
@@ -101,11 +108,12 @@ class App extends Component {
           </div>
         </header>
         <main>
-        <div id="feed">
+        <div id="feed" className={loggedin ? '' : 'hidden'}>
           {posts.map((post, key) => <Share post={post} key={post.share_id} theKey={post.share_id} access_token={access_token} />)}
         </div>
         </main>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

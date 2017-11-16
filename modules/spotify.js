@@ -80,6 +80,7 @@
 
 
       } else {
+        console.log(body)
         res.redirect('/#' +
           querystring.stringify({
             error: 'invalid_token'

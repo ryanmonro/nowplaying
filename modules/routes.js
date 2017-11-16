@@ -1,7 +1,7 @@
 
 (()=>{
-  var database = require('./modules/database')
-  var spotifyLib = require('./modules/spotify')
+  var database = require('./database')
+  var spotifyLib = require('./spotify')
 
   var api = {
     getPosts: function(req, res){
