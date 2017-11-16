@@ -6,7 +6,7 @@ html, body, header, h1 {
   padding: 0;
 }
 body {
-  background: seagreen;
+  background: darkseagreen;
 }
 
 .App {
@@ -17,11 +17,16 @@ body {
   background-color: #222;
   
   padding: 20px;
+  color: beige;
+}
+
+.App-header a {
   color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2.5em;
+  font-family: 'Audiowide';
 }
 
 .App-intro {
