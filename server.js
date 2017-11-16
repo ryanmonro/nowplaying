@@ -10,7 +10,7 @@ const pgp = require('pg-promise')();
 const PORT = 3001;
 
 // Database
-const connection = {
+const connection = process.env.DATABASE_URL || {
   host: 'localhost',
   port: 5432,
   database: 'nowplaying_dev'
