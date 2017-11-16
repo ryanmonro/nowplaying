@@ -7,7 +7,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const pgp = require('pg-promise')();
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Database
 const connection = process.env.DATABASE_URL || {
@@ -22,7 +22,7 @@ const db = pgp(connection);
 const stateKey = 'spotify_auth_state';
 const client = {
   clientId: '068c62453a994ed3831a45fab8bd2b87',
-  secretId: '1191604707c749d9bcdb1e45304cfb41',
+  secretId: process.env.SECRET_KEY,
   scope: 'user-read-currently-playing',
   redirect: 'http://localhost:3001/callback'
 }
