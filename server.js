@@ -24,22 +24,11 @@ const client = {
   clientId: '068c62453a994ed3831a45fab8bd2b87',
   secretId: process.env.SECRET_KEY,
   scope: 'user-read-currently-playing',
-  redirect: 'http://localhost:3001/callback'
+  redirect: process.env.SPOTIFY_CALLBACK || 'https://nowplaying.herokuapp.com/callback'
 }
-
-// Middleware starts here
-// app.set('views', './views');
-// app.set('view engine', 'ejs');
 
 app.use(cookieParser());
 
-
-// Routes
-
-// app.get('/index.html', function(request, response){
-//   response.send('hey')
-//   // response.sendFile('client/build/index.html');
-// })
 app.use(express.static('client/build/'));
 
 // Spotify authorization
@@ -183,48 +172,11 @@ app.get('/api/comment', function(req, res){
 app.get('/api/posts', function(req, res){
   db.any('SELECT users.name AS name, tracks.spotify_id AS track, shares.id AS share_id, shares.created_at AS timestamp FROM shares, tracks, users, comments WHERE shares.track_id = tracks.id AND shares.user_id = users.id ORDER BY timestamp DESC')
     .then(function(data) {
-      // results = {}
-      // data.forEach(function(row){
-      //   {}
-      // })
-
       res.json(data);
     })
     .catch(function(error) {
         console.log('error fetching posts', error)
     });
-  // var posts = [
-  //   {
-  //     name: 'luckyluke',
-  //     track: '3C88onjSPfnDW2xgDGmKRg',
-  //     comments: [
-  //       {
-  //         name: 'ryanmonro',
-  //         body: 'sweet!'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     name: '1241373202',
-  //     track: '73bDvrmSBh2fr53tLDH9oA',
-  //     comments: [
-  //       {
-  //         name: 'dave',
-  //         body: 'nice choice'
-  //       },
-  //       {
-  //         name: 'somebody',
-  //         body: 'I like it'
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     name: '1266416371',
-  //     track: '2wRXbDpe0Uv0ebgsCSkXHO',
-  //     comments: []
-  //   }
-  // ]
-  // res.json(posts);
 })
 
 //
@@ -248,7 +200,5 @@ function getInsertTrackId(spotify_id) {
       });
   });
 }
-
-
 
 app.listen(PORT);
