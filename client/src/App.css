@@ -6,16 +6,16 @@ html, body, header, h1 {
   padding: 0;
 }
 body {
-  background: darkseagreen;
+  background: #6AE368;
 }
 
 .App {
-  text-align: center;
 }
 
 .App-header {
   background-color: #222;
   
+  text-align: center;
   padding: 20px;
   color: beige;
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
 // import './backend.js'
-// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 // import AppBar from 'material-ui/AppBar';
 import Avatar from './Avatar'
 import Player from './Player'
@@ -19,6 +19,7 @@ class App extends Component {
     this.getNowPlaying = this.getNowPlaying.bind(this)
     this.getTrackDetails = this.getTrackDetails.bind(this)
     this.playTrack = this.playTrack.bind(this)
+    this.getAvatarUrl = this.getAvatarUrl.bind(this)
     const hashParams = this.getHashParams()
     this.state = {
       loggedin: hashParams.id && hashParams.access_token,
@@ -84,6 +85,10 @@ class App extends Component {
     return api.playTrack(track, this.state.access_token)
   }
 
+  getAvatarUrl(userId){
+    return api.getAvatarUrl(userId, this.state.access_token)
+  }
+
   share(e){
     let {currentTrack, userId, posts} = this.state 
     api.shareTrack(currentTrack, userId)
@@ -98,10 +103,10 @@ class App extends Component {
       this.setState({posts: posts})
     })
   }
-// <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
   render() {
     let {loggedin, playing, userId, access_token, posts, currentTrack} = this.state
     return (
+    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">NowPlaying</h1>
@@ -130,12 +135,14 @@ class App extends Component {
               key={post.share_id} 
               theKey={post.share_id} 
               getTrackDetails={this.getTrackDetails} 
-              playTrack={this.playTrack} 
+              playTrack={this.playTrack}
+              getAvatarUrl={this.getAvatarUrl}
               access_token={access_token} 
             />)}
         </div>
         </main>
       </div>
+    </MuiThemeProvider>
     );
   }
 }

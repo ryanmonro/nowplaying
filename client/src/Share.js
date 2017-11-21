@@ -1,5 +1,6 @@
 import React from 'react'
 import Avatar from './Avatar'
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 export default class Share extends React.Component {
   constructor(props){
@@ -10,12 +11,15 @@ export default class Share extends React.Component {
       key: props.theKey,
       access_token: props.access_token,
       getTrackDetails: props.getTrackDetails,
-      playTrack: props.playTrack
+      playTrack: props.playTrack,
+      getAvatarUrl: props.getAvatarUrl,
+      avatarUrl: null
     }
   }
 
   componentDidMount(){
     this.getTrackDetails()
+    this.getAvatarUrl()
   }
 
   playTrack(event){
@@ -29,18 +33,39 @@ export default class Share extends React.Component {
     .then(res=>this.setState({track: res}))
   }
 
+  getAvatarUrl(){
+    this.state.getAvatarUrl(this.state.post.name)
+    .then(res=>res.json())
+    .then(res=> {
+      const images = res.images || []
+      if(images.length){
+        let imgUrl = res.images[0].url
+        this.setState({avatarUrl: imgUrl})
+      }
+    })
+  }
+
   render(){
-    let {key, post, access_token, track} = this.state
+    let {key, post, track} = this.state
     return (
-      <div key={key} className="share">
-        <Avatar userId={post.name} theKey={key} access_token={access_token}/>
-        {track ? <img src={track.album.images[2].url} alt='album art' title={track.album.name}/> : ''}
-        {track ? <a href="#" onClick={this.playTrack}>{track.artists[0].name} - </a> : '...'} 
-        {track ? track.name : ''}
-      </div>
+      <Card key={key}>
+        <CardHeader
+          title={track ? track.name : ''}
+          subtitle={track ? track.artists[0].name : '...'}
+          avatar={this.state.avatarUrl}
+          actAsExpander={true}
+          showExpandableButton={true}
+        />
+        
+         
+        
+      
+      </Card>
     )
   }
 }
+
+// {track ? <img src={track.album.images[2].url} alt='album art' title={track.album.name}/> : ''}
 
 /*<form className="commentForm"> 
             <input type="text" name="body" />
