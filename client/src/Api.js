@@ -31,4 +31,26 @@ export default class Api {
     })
   }
 
+  getTrackDetails(trackId, access_token){
+    const url = 'https://api.spotify.com/v1/tracks/' + trackId
+    return fetch(url, {
+      headers: {
+          'Authorization': 'Bearer ' + access_token
+        }
+    })
+  }
+
+  playTrack(trackId, access_token){
+    const url = 'https://api.spotify.com/v1/me/player/play/'
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+          'Authorization': 'Bearer ' + access_token
+        },
+      body: JSON.stringify({"uris":[
+        "spotify:track:" + trackId]
+      })
+    })
+  }
+
 }

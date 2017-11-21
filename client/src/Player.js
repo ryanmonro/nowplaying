@@ -9,7 +9,10 @@ export default class Player extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({track: nextProps.track});
+    if (nextProps.track !== this.state.track){
+      console.log(nextProps.track, this.state.track)
+      this.setState({track: nextProps.track});
+    }   
   }
 
   render(){

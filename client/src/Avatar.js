@@ -15,9 +15,15 @@ export default class Avatar extends React.Component {
     }    
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({userId: nextProps.userId});
+  componentWillMount(){
     this.getUrl()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userId !== this.state.userId) {
+      this.setState({userId: nextProps.userId});
+      this.getUrl()
+    }
   }
 
   getUrl(){
@@ -42,6 +48,6 @@ export default class Avatar extends React.Component {
   // }
 
   render() {
-    return <img src={this.state.url} key={this.state.theKey} className='avatar' alt={this.state.userId}/>
+    return <img src={this.state.url} key={this.state.theKey} className='avatar' title={this.state.userId} alt='avatar'/>
   }
 }

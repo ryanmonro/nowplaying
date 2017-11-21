@@ -9,7 +9,7 @@
   const client = {
     clientId: '068c62453a994ed3831a45fab8bd2b87',
     secretId: process.env.SECRET_KEY,
-    scope: 'user-read-currently-playing',
+    scope: 'user-read-currently-playing user-modify-playback-state',
     redirect: process.env.SPOTIFY_CALLBACK || 'http://localhost:3001/callback'
   }
 
