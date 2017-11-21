@@ -105,8 +105,10 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">NowPlaying</h1>
-          <div id="login" className={loggedin ? 'hidden' : ''}>
-            <p><a href='/login' target="_self">Log In with Spotify</a></p>
+          <div id="login" 
+              className={loggedin ? 'hidden' : ''} >
+            <p><a href='/login'target="_self">Log In with Spotify</a>
+            </p>
           </div>
           <div id="logout" className={!loggedin ? 'hidden' : ''}>
             <p><a href='/' target="_self">Log Out</a></p>
@@ -115,13 +117,22 @@ class App extends Component {
               {loggedin ? <Avatar userId={userId} access_token={access_token}/> : ''}
           </div>
           <div id="nowplaying" className={playing ? '' : 'hidden'}>
-            {playing ? <Player track={currentTrack} /> : ''}
-            <button onClick={this.share}>Share!</button>
+            {playing ? 
+              <Player track={currentTrack} /> : ''}
+              <button onClick={this.share}>Share!</button>
           </div>
         </header>
         <main>
         <div id="feed" className={loggedin ? '' : 'hidden'}>
-          {posts.map((post, key) => <Share post={post} key={post.share_id} theKey={post.share_id} getTrackDetails={this.getTrackDetails} playTrack={this.playTrack} access_token={access_token} />)}
+          { posts.map((post, key) => 
+            <Share 
+              post={post} 
+              key={post.share_id} 
+              theKey={post.share_id} 
+              getTrackDetails={this.getTrackDetails} 
+              playTrack={this.playTrack} 
+              access_token={access_token} 
+            />)}
         </div>
         </main>
       </div>
