@@ -64,9 +64,9 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.getPosts()
 
     if (this.state.loggedin){ 
+      this.getPosts()
       this.getNowPlaying()
       setInterval(this.getNowPlaying, 10000)
     }
