@@ -9,9 +9,6 @@ body {
   background: #6AE368;
 }
 
-.App {
-}
-
 .App-header {
   background-color: #222;
   
@@ -25,7 +22,7 @@ body {
 }
 
 .App-title {
-  font-size: 2.5em;
+  font-size: 2em;
   font-family: 'Audiowide';
 }
 

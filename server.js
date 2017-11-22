@@ -22,6 +22,8 @@ app.get('/api/share', routes.api.createShare)
 
 app.get('/api/comment', routes.api.createComment)
 
-app.get('/api/posts', routes.api.getPosts); 
+app.get('/api/posts', routes.api.getPosts)
+
+app.get('/api/comments', routes.api.getComments)
 
 app.listen(PORT);

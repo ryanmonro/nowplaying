@@ -13,6 +13,16 @@
           console.log('error fetching posts', error)
       })
     },
+    getComments: function(req, res){
+      let shareId = req.query.shareId
+      database.getComments(shareId)
+      .then(function(data) {
+        res.json(data);
+      })
+      .catch(function(error) {
+          console.log('error fetching comments', error)
+      })
+    },
     createComment: function(req, res){
       var userId = req.query.userId || null
       var shareId = req.query.shareId || null

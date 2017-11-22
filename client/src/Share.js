@@ -1,6 +1,15 @@
 import React from 'react'
-import Avatar from './Avatar'
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+
+const styles = {
+  cardStyle: {
+    marginTop: 10
+  },
+  actions: {
+    textAlign: 'center'
+  }
+}
 
 export default class Share extends React.Component {
   constructor(props){
@@ -9,17 +18,19 @@ export default class Share extends React.Component {
     this.state = {
       post: props.post,
       key: props.theKey,
-      access_token: props.access_token,
       getTrackDetails: props.getTrackDetails,
       playTrack: props.playTrack,
       getAvatarUrl: props.getAvatarUrl,
-      avatarUrl: null
+      avatarUrl: null,
+      commentCount: null,
+      getComments: props.getComments
     }
   }
 
   componentDidMount(){
     this.getTrackDetails()
     this.getAvatarUrl()
+    this.getComments()
   }
 
   playTrack(event){
@@ -31,6 +42,14 @@ export default class Share extends React.Component {
     this.state.getTrackDetails(this.state.post.track)
     .then(res=>res.json())
     .then(res=>this.setState({track: res}))
+  }
+
+  getComments(){
+    this.state.getComments(this.state.post.share_id)
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res)
+      this.setState({commentCount: res.length})})
   }
 
   getAvatarUrl(){
@@ -46,9 +65,9 @@ export default class Share extends React.Component {
   }
 
   render(){
-    let {key, post, track} = this.state
+    let {key, post, commentCount, track} = this.state
     return (
-      <Card key={key}>
+      <Card key={key} style={styles.cardStyle}>
         <CardHeader
           title={track ? track.name : ''}
           subtitle={track ? track.artists[0].name : '...'}
@@ -56,6 +75,17 @@ export default class Share extends React.Component {
           actAsExpander={true}
           showExpandableButton={true}
         />
+        <CardActions style={styles.actions}>
+          <RaisedButton label="Play" onClick={this.playTrack}/>
+        </CardActions>
+        <CardText>
+          { commentCount ? commentCount + " comments" : '0 comments'}
+        </CardText>
+        <CardMedia
+          expandable={true}>
+          {track ? <img src={track.album.images[1].url} alt='album art' title={track.album.name}/> : ''}
+        </CardMedia>
+
         
          
         
@@ -64,8 +94,6 @@ export default class Share extends React.Component {
     )
   }
 }
-
-// {track ? <img src={track.album.images[2].url} alt='album art' title={track.album.name}/> : ''}
 
 /*<form className="commentForm"> 
             <input type="text" name="body" />

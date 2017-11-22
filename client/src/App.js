@@ -30,20 +30,15 @@ class App extends Component {
       access_token: hashParams.access_token,
       refresh_token: hashParams.refresh_token
     }
-
-    api.getPosts()
-    .then(res=>res.json())
-    .then(res=>this.setState({posts: res}))
-
-    if (this.state.loggedin){
-      
-      this.getNowPlaying()
-      setInterval(this.getNowPlaying, 10000)
-    }
   }
 
   componentDidMount(){
+    this.getPosts()
 
+    if (this.state.loggedin){ 
+      this.getNowPlaying()
+      setInterval(this.getNowPlaying, 10000)
+    }
   }
 
   getHashParams(){
@@ -71,10 +66,22 @@ class App extends Component {
           this.setState({playing: true, currentTrack: currentTrack})
         } 
       )
+      } else if (res.status === 401){
+        this.updateToken()
       } else {
         this.setState({playing: false, currentTrack: null})
       }
     })
+  }
+
+  getPosts(){
+    api.getPosts()
+    .then(res=>res.json())
+    .then(res=>this.setState({posts: res}))
+  }
+
+  getComments(shareId){
+    return api.getComments(shareId)
   }
 
   getTrackDetails(track){
@@ -137,7 +144,7 @@ class App extends Component {
               getTrackDetails={this.getTrackDetails} 
               playTrack={this.playTrack}
               getAvatarUrl={this.getAvatarUrl}
-              access_token={access_token} 
+              getComments={this.getComments}
             />)}
         </div>
         </main>

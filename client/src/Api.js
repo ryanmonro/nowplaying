@@ -2,6 +2,11 @@ export default class Api {
   getPosts(){
     return fetch('/api/posts')
   }
+
+  getComments(shareId){
+    return fetch(`/api/comments?shareId=${shareId}`)
+  }
+
   updateToken(refresh_token){
     const url = `/refresh_token?refresh_token=${refresh_token}`
     return fetch(url)
