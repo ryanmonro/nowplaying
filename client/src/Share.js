@@ -1,13 +1,26 @@
 import React from 'react'
 import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
+import {Paper} from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
   cardStyle: {
     marginTop: 10
   },
+  albumArt: {
+    width: '50%'
+  },
   actions: {
     textAlign: 'center'
+  },
+  avatar: {
+    height: '48px',
+    width: '48px',
+    borderRadius: '50%'
+  },
+  album: {
+    height: '48px',
+    width: '48px'
   }
 }
 
@@ -71,25 +84,19 @@ export default class Share extends React.Component {
         <CardHeader
           title={track ? track.name : ''}
           subtitle={track ? track.artists[0].name : '...'}
-          avatar={this.state.avatarUrl}
+          avatar={track ? <img src={track.album.images[2].url} /> : ''}
           actAsExpander={true}
           showExpandableButton={true}
         />
-        <CardActions style={styles.actions}>
+        <CardHeader 
+          expandable={true}
+          title={'shared by ' + post.name}
+          subtitle='12 minutes ago'
+          avatar={this.state.avatarUrl}
+        />
+        <CardActions style={styles.actions} expandable={true}>
           <RaisedButton label="Play" onClick={this.playTrack}/>
         </CardActions>
-        <CardText>
-          { commentCount ? commentCount + " comments" : '0 comments'}
-        </CardText>
-        <CardMedia
-          expandable={true}>
-          {track ? <img src={track.album.images[1].url} alt='album art' title={track.album.name}/> : ''}
-        </CardMedia>
-
-        
-         
-        
-      
       </Card>
     )
   }

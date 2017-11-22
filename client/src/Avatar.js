@@ -1,7 +1,14 @@
 import React from 'react'
 import Api from './Api.js'
-// import MAvatar from 'material-ui/Avatar'
 const api = new Api()
+
+const styles = {
+  avatar: {
+    height: 64,
+    width: 64,
+    borderRadius: '50%'
+  }
+}
 
 export default class Avatar extends React.Component {
   constructor(props){
@@ -48,6 +55,6 @@ export default class Avatar extends React.Component {
   // }
 
   render() {
-    return <img src={this.state.url} key={this.state.theKey} className='avatar' title={this.state.userId} alt='avatar'/>
+    return <img src={this.state.url} key={this.state.theKey} style={styles.avatar} title={this.state.userId} alt='avatar'/>
   }
 }
