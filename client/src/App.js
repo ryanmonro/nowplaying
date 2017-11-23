@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import './App.css';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+// import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import AppBar from 'material-ui/AppBar'
-import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardMedia} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton'
-import {deepOrange500} from 'material-ui/styles/colors'
+// import {deepOrange500} from 'material-ui/styles/colors'
 import Avatar from './Avatar'
 import Player from './Player'
 import Share from './Share'
@@ -48,9 +48,6 @@ class App extends Component {
     super(props)
     this.share = this.share.bind(this)
     this.getNowPlaying = this.getNowPlaying.bind(this)
-    this.getTrackDetails = this.getTrackDetails.bind(this)
-    this.playTrack = this.playTrack.bind(this)
-    this.getAvatarUrl = this.getAvatarUrl.bind(this)
     const hashParams = this.getHashParams()
     this.state = {
       loggedin: hashParams.id && hashParams.access_token,
@@ -114,24 +111,6 @@ class App extends Component {
     .then(res=>this.setState({posts: res}))
   }
 
-  getComments(shareId){
-    return api.getComments(shareId)
-  }
-
-  getTrackDetails(track){
-    return api.getTrackDetails(track, this.state.access_token)
-  }
-
-  playTrack(track){
-
-    api.playTrack(track, this.state.access_token)
-    .then(this.getNowPlaying)
-  }
-
-  getAvatarUrl(userId){
-    return api.getAvatarUrl(userId, this.state.access_token)
-  }
-
   share(e){
     let {currentTrack, userId, posts} = this.state 
     api.shareTrack(currentTrack, userId)
@@ -151,7 +130,6 @@ class App extends Component {
     let {loggedin, playing, userId, access_token, posts, currentTrack} = this.state
     return (
     <MuiThemeProvider muiTheme={muiTheme}>
-      
         <AppBar 
           title="NowPlaying" 
           style={styles.appBar}
@@ -182,10 +160,8 @@ class App extends Component {
               post={post} 
               key={post.share_id} 
               theKey={post.share_id} 
-              getTrackDetails={this.getTrackDetails} 
-              playTrack={this.playTrack}
-              getAvatarUrl={this.getAvatarUrl}
-              getComments={this.getComments}
+              access_token={access_token}
+              api={api}
             />)}
         
         </main>
