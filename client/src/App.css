@@ -10,7 +10,7 @@ html, body, header, h1 {
   display: none;
 }
 
-main {
+#feed {
   width: 80%;
   margin: 0 auto;
 }

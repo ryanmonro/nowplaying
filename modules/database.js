@@ -15,7 +15,7 @@
   }
 
   function getComments(share_id){
-    return db.any('SELECT * from comments WHERE share_id = ' + share_id)
+    return db.any('SELECT body, created_at AS timestamp, CURRENT_TIMESTAMP AS timenow from comments WHERE share_id = ' + share_id)
   }
 
   function getUserByName(name){

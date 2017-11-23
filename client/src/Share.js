@@ -1,6 +1,12 @@
 import React from 'react'
 import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Avatar from 'material-ui/Avatar';
+import TextField from 'material-ui/TextField';
+import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow';
 const moment = require('moment')
 
 const styles = {
@@ -66,6 +72,27 @@ export default class Share extends React.Component {
       this.setState({comments: res})})
   }
 
+  commentsItems(){
+    let comments = this.state.comments.map((comment, key) =>
+      <ListItem
+        value={key}
+        primaryText={comment.body}
+        secondaryText={<p>{moment(comment.timestamp).from(moment(comment.timenow))}</p>}
+        secondaryTextLines={2}
+        leftAvatar={<Avatar src={this.state.avatarUrl}
+        /> }
+      />)
+    let output = 
+    [<ListItem>
+      <TextField hintText="Enter comment" name="comment"/>
+      <RaisedButton style={{marginLeft: 10}}label="Post" />
+    </ListItem>]
+    if (comments.length > 0){
+      output.unshift(comments)
+    }
+    return output
+  }
+
   getAvatarUrl(){
     this.state.api.getAvatarUrl(this.state.post.name, this.state.access_token)
     .then(res=>res.json())
@@ -79,33 +106,29 @@ export default class Share extends React.Component {
   }
 
   render(){
-    let {key, post, track} = this.state
+    let {key, post, track, comments} = this.state
+    let hasComments = comments.length > 0
     return (
-      <Card key={key} style={styles.cardStyle}>
-        <CardHeader
-          title={track ? track.name : ''}
-          subtitle={track ? track.artists[0].name : '...'}
-          avatar={track ? <img src={track.album.images[2].url} alt="album artwork" title="" /> : ''}
-          actAsExpander={true}
-          showExpandableButton={true}
-        />
-        <CardHeader 
-          expandable={true}
-          title={post.name}
-          subtitle={moment(post.timestamp).from(moment(post.timenow))}
-          avatar={this.state.avatarUrl}
-          style={{marginLeft: 25}}
-        />
-        <CardActions
-          expandable={true} 
-          style={styles.actions}
-        >
-          <RaisedButton label="Play" onClick={this.playTrack}/>
-        </CardActions>
-      </Card>
+      <ListItem 
+        key={key} 
+        style={styles.cardStyle}
+        hoverColor={'white'}
+        primaryTogglesNestedList={true}
+        primaryText={track ? track.name : ''}
+        secondaryText={<p><b>{track ? track.artists[0].name : '...'}</b><br/>Shared by {post.name} {moment(post.timestamp).from(moment(post.timenow))} {hasComments ? " (" + comments.length + " comments)" : ''}</p>}
+        secondaryTextLines={2}
+        leftAvatar={track ? <Avatar src={track.album.images[2].url} /> : ''}
+        rightIconButton={<FloatingActionButton mini={true} onClick={this.playTrack}><AvPlayArrow/></FloatingActionButton>}
+        // nestedItems={this.commentsItems()}
+      />
     )
   }
 }
+
+// nestedItems={ 
+
+//           />)}
+
 
 /*<form className="commentForm"> 
             <input type="text" name="body" />

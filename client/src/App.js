@@ -5,6 +5,7 @@ import './App.css';
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import AppBar from 'material-ui/AppBar'
 import {Card, CardActions, CardMedia} from 'material-ui/Card';
+import {List, ListItem} from 'material-ui/List';
 import RaisedButton from 'material-ui/RaisedButton'
 // import {deepOrange500} from 'material-ui/styles/colors'
 import Avatar from './Avatar'
@@ -154,7 +155,7 @@ class App extends Component {
             </CardActions>
           </Card> 
         }
-        <main id="feed" className={loggedin ? '' : 'hidden'}>
+        <List id='feed' className={loggedin ? '' : 'hidden'}>
           { posts.map((post, key) => 
             <Share 
               post={post} 
@@ -163,8 +164,7 @@ class App extends Component {
               access_token={access_token}
               api={api}
             />)}
-        
-        </main>
+        </List>
     </MuiThemeProvider>
     );
   }
