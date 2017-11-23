@@ -158,17 +158,24 @@ class App extends Component {
           showMenuIconButton={false}
           iconElementRight={loggedin ? <Avatar userId={userId} access_token={access_token}/> : '' }
         />
+        {loggedin ? 
           <Card style={styles.nowPlayingCard}>
-            {playing ? 
+            {playing ?
+            <div>
             <CardMedia>
               <Player track={currentTrack} /> 
-            </CardMedia> : '' }
+            </CardMedia>
             <CardActions>
-              {playing ? 
               <RaisedButton primary={true} onClick={this.share} label="Share!" />
-              : <Login />}
+            </CardActions>
+            </div> : '' }
+          </Card> :
+          <Card style={styles.nowPlayingCard}>
+            <CardActions>
+              <Login />
             </CardActions>
           </Card> 
+        }
         <main id="feed" className={loggedin ? '' : 'hidden'}>
           { posts.map((post, key) => 
             <Share 

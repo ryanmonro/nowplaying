@@ -100,6 +100,7 @@ export default class Share extends React.Component {
           title={'shared by ' + post.name}
           subtitle={moment(post.timestamp).from(moment(post.timenow))}
           avatar={this.state.avatarUrl}
+          style={{marginLeft: 25}}
         />
         <CardActions style={styles.actions} expandable={true}>
           <RaisedButton label="Play" onClick={this.playTrack}/>
