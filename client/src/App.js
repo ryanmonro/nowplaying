@@ -22,7 +22,7 @@ const muiTheme = getMuiTheme({
 
 const styles = {
   appBar: {
-    // textAlign: 'center'
+    textAlign: 'center'
   },
   nowPlayingCard: {
     padding: '15px',
@@ -68,7 +68,10 @@ class App extends Component {
     if (this.state.loggedin){ 
       this.getPosts()
       this.getNowPlaying()
-      setInterval(this.getNowPlaying, 10000)
+      setInterval(()=>{
+        this.getNowPlaying()
+        this.getPosts()
+      }, 10000)
     }
   }
 
@@ -120,7 +123,9 @@ class App extends Component {
   }
 
   playTrack(track){
-    return api.playTrack(track, this.state.access_token)
+
+    api.playTrack(track, this.state.access_token)
+    .then(this.getNowPlaying)
   }
 
   getAvatarUrl(userId){
@@ -151,18 +156,19 @@ class App extends Component {
           title="NowPlaying" 
           style={styles.appBar}
           showMenuIconButton={false}
-          iconElementRight={loggedin ? <Avatar userId={userId} access_token={access_token}/> : <Login /> }
+          iconElementRight={loggedin ? <Avatar userId={userId} access_token={access_token}/> : '' }
         />
-        {playing ? 
           <Card style={styles.nowPlayingCard}>
+            {playing ? 
             <CardMedia>
               <Player track={currentTrack} /> 
-            </CardMedia>
+            </CardMedia> : '' }
             <CardActions>
+              {playing ? 
               <RaisedButton primary={true} onClick={this.share} label="Share!" />
+              : <Login />}
             </CardActions>
           </Card> 
-        : ''}
         <main id="feed" className={loggedin ? '' : 'hidden'}>
           { posts.map((post, key) => 
             <Share 

@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, CardActions, CardHeader, CardMedia, CardText} from 'material-ui/Card';
 import {Paper} from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton';
+const moment = require('moment')
 
 const styles = {
   cardStyle: {
@@ -44,6 +45,12 @@ export default class Share extends React.Component {
     this.getTrackDetails()
     this.getAvatarUrl()
     this.getComments()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.post.timenow !== this.state.post.timenow) {
+      this.setState({post: nextProps.post});
+    }
   }
 
   playTrack(event){
@@ -91,7 +98,7 @@ export default class Share extends React.Component {
         <CardHeader 
           expandable={true}
           title={'shared by ' + post.name}
-          subtitle='12 minutes ago'
+          subtitle={moment(post.timestamp).from(moment(post.timenow))}
           avatar={this.state.avatarUrl}
         />
         <CardActions style={styles.actions} expandable={true}>

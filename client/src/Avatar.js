@@ -4,8 +4,8 @@ const api = new Api()
 
 const styles = {
   avatar: {
-    height: 64,
-    width: 64,
+    height: 40,
+    width: 40,
     borderRadius: '50%'
   }
 }

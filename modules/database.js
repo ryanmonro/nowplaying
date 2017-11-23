@@ -11,7 +11,7 @@
   const db = pgp(connection);
 
   function getPosts(){
-    return db.any('SELECT users.name AS name, tracks.spotify_id AS track, shares.id AS share_id, shares.created_at AS timestamp FROM shares, tracks, users WHERE shares.track_id = tracks.id AND shares.user_id = users.id ORDER BY timestamp DESC LIMIT 10')
+    return db.any('SELECT users.name AS name, tracks.spotify_id AS track, shares.id AS share_id, shares.created_at AS timestamp, CURRENT_TIMESTAMP AS timenow FROM shares, tracks, users WHERE shares.track_id = tracks.id AND shares.user_id = users.id ORDER BY timestamp DESC LIMIT 10')
   }
 
   function getComments(share_id){
